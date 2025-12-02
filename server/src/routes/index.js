@@ -39,7 +39,7 @@ function routes(app) {
     app.post('/api/upload-images', upload.array('images'), (req, res) => {
         return res.status(200).json({
             message: 'Images uploaded successfully',
-            images: req.files.map((file) => `${import.meta.env.VITE_SOCKET_URL}/uploads/images/${file.filename}`),
+            images: req.files.map((file) => `${process.env.SERVER_URL}/uploads/images/${file.filename}`),
         });
     });
 
