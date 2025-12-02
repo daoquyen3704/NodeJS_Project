@@ -1,18 +1,32 @@
+// src/store/Provider.jsx (hoặc đường dẫn của bạn)
+
 import Context from './Context';
 import CryptoJS from 'crypto-js';
 import { useEffect, useState } from 'react';
+
 import { requestAuth, requestSearch } from '../config/request';
 import useDebounce from '../hooks/useDebounce';
 
 export function Provider({ children }) {
-  const [dataUser, setDataUser] = useState(null);
+  const [dataUser, setDataUser] = useState({});          // ✅ luôn là object
   const [dataPayment, setDataPayment] = useState(null);
   const [dataMessages, setDataMessages] = useState([]);
   const [globalUsersMessage, setGlobalUsersMessage] = useState([]);
 
+  const [valueSearch, setValueSearch] = useState('');
+  const debouncedSearch = useDebounce(valueSearch, 500);
+  const [dataSearch, setDataSearch] = useState([]);
+
+  // ================== AUTH ================== //
   const fetchAuth = async () => {
     try {
-      const res = await requestAuth(); // axios đã withCredentials = true nên cookie tự gửi
+      const res = await requestAuth();                // axios đã withCredentials = true
+
+      // Nếu backend không trả auth (chưa đăng nhập)
+      if (!res?.metadata?.auth) {
+        setDataUser({});
+        return null;
+      }
 
       const bytes = CryptoJS.AES.decrypt(
         res.metadata.auth,
@@ -21,44 +35,47 @@ export function Provider({ children }) {
       const originalText = bytes.toString(CryptoJS.enc.Utf8);
 
       if (!originalText) {
-        throw new Error('Decrypt failed');
+        console.error('Decrypt user failed');
+        setDataUser({});
+        return null;
       }
 
       const user = JSON.parse(originalText);
       setDataUser(user);
       return user;
     } catch (err) {
+      // ❌ Không được để lỗi văng ra làm crash React
       console.error('fetchAuth error:', err);
-      setDataUser(null);
-      throw err;
+      setDataUser({});
+      return null;
     }
   };
 
-  // Auto fetch user nếu đang đăng nhập (nếu /api/auth trả 401 thì bỏ qua)
+  // Chạy 1 lần khi app mount: nếu có cookie hợp lệ -> /api/auth ok -> set user
   useEffect(() => {
     (async () => {
-      try {
-        await fetchAuth();
-      } catch (e) {
-        // Không logged in thì thôi, đừng làm gì
-      }
+      await fetchAuth();
     })();
   }, []);
 
-  // ===== SEARCH =====
-  const [valueSearch, setValueSearch] = useState('');
-  const debouncedSearch = useDebounce(valueSearch, 500);
-  const [dataSearch, setDataSearch] = useState([]);
-
+  // ================== SEARCH GỢI Ý ================== //
   useEffect(() => {
     const fetchData = async () => {
+      // Nếu ô search rỗng thì clear list, tránh call API thừa
       if (!debouncedSearch) {
         setDataSearch([]);
         return;
       }
-      const res = await requestSearch(debouncedSearch);
-      setDataSearch(res.metadata);
+
+      try {
+        const res = await requestSearch(debouncedSearch);
+        setDataSearch(res.metadata || []);
+      } catch (err) {
+        console.error('Search suggestion error:', err);
+        setDataSearch([]);
+      }
     };
+
     fetchData();
   }, [debouncedSearch]);
 
@@ -68,7 +85,7 @@ export function Provider({ children }) {
         dataUser,
         dataPayment,
         setDataPayment,
-        fetchAuth,
+        fetchAuth,             // để Login / Profile có thể gọi lại sau khi update
         dataSearch,
         setValueSearch,
         dataMessages,
