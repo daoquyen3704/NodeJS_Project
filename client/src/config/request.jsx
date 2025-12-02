@@ -1,6 +1,6 @@
 import axios from "axios";
-
-import cookies from "js-cookie";
+// ❌ KHÔNG cần js-cookie nữa
+// import cookies from "js-cookie";
 
 axios.defaults.withCredentials = true;
 
@@ -10,6 +10,8 @@ const request = axios.create({
 });
 
 request.defaults.withCredentials = true;
+
+// ================== CÁC HÀM REQUEST GIỮ NGUYÊN ==================
 
 export const requestAddSearch = async (data) => {
   const res = await request.post("/api/add-search-keyword", data);
@@ -201,9 +203,8 @@ export const requestGetFavourite = async () => {
 };
 
 export const requestGetPosts = async (params) => {
-  // Filter out parameters with empty string values
   const filteredParams = Object.entries(params)
-    .filter(([key, value]) => value !== "")
+    .filter(([_, value]) => value !== "")
     .reduce((acc, [key, value]) => {
       acc[key] = value;
       return acc;
@@ -275,42 +276,34 @@ export const requestUploadImage = async (data) => {
   return res.data;
 };
 
+// ================== INTERCEPTOR REFRESH TOKEN (ĐÃ SỬA) ==================
+
 let isRefreshing = false;
 let failedRequestsQueue = [];
 
 request.interceptors.response.use(
-  (response) => response, // Trả về nếu không có lỗi
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Nếu lỗi 401 (Unauthorized) và request chưa từng thử refresh
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       if (!isRefreshing) {
         isRefreshing = true;
-        console.log('🔄 Access token expired, refreshing...');
+        console.log("🔄 Access token expired, refreshing...");
 
         try {
-          // Kiểm tra xem có logged cookie không
-          const token = cookies.get("logged");
-          if (!token) {
-            console.error('❌ No logged cookie found, redirecting to login');
-            localStorage.clear();
-            window.location.href = "/login";
-            return Promise.reject(error);
-          }
+          // Gọi trực tiếp refresh token, cookie đã tự gửi kèm vì withCredentials = true
+          await axios.get(`${import.meta.env.VITE_SOCKET_URL}/api/refresh-token`, {
+            withCredentials: true,
+          });
+          console.log("✅ Token refreshed successfully");
 
-          // Gửi yêu cầu refresh token
-          await requestRefreshToken();
-          console.log('✅ Token refreshed successfully');
-
-          // Xử lý lại tất cả các request bị lỗi 401 trước đó
           failedRequestsQueue.forEach((req) => req.resolve());
           failedRequestsQueue = [];
         } catch (refreshError) {
-          console.error('❌ Token refresh failed:', refreshError);
-          // Nếu refresh thất bại, đăng xuất
+          console.error("❌ Token refresh failed:", refreshError);
           failedRequestsQueue.forEach((req) => req.reject(refreshError));
           failedRequestsQueue = [];
           localStorage.clear();
@@ -321,12 +314,10 @@ request.interceptors.response.use(
         }
       }
 
-      // Trả về một Promise để retry request sau khi token mới được cập nhật
       return new Promise((resolve, reject) => {
         failedRequestsQueue.push({
           resolve: () => {
-            // Retry request sau khi token đã được refresh
-            console.log('♻️ Retrying request:', originalRequest.url);
+            console.log("♻️ Retrying request:", originalRequest.url);
             resolve(request(originalRequest));
           },
           reject: (err) => reject(err),
