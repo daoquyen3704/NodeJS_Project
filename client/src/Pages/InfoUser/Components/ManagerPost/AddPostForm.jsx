@@ -309,7 +309,7 @@ const handleFinish = async (values) => {
 
           <div className={cx('editor-wrapper')}>
             <Editor
-              apiKey="hfm046cu8943idr5fja0r5l2vzk9l8vkj5cp3hx2ka26l84x"
+              apiKey="66xco7re62i7j6q70ubpvzj18jvv14tjtygj1tae60npad7k"
               init={{
                 plugins:
                   'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
