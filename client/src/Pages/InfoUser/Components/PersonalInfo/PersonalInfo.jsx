@@ -309,16 +309,18 @@ const handleOk = async () => {
               className={cx('avatar-img')}
             />
           </div>
+
           <Upload
             name="avatar"
             showUploadList={false}
             beforeUpload={beforeUpload}
             onChange={handleAvatarChange}
-            action="http://localhost:3000/api/upload-image"
+            action={`${import.meta.env.VITE_SOCKET_URL}/api/upload-image`}
           >
             <Button icon={<UploadOutlined />}>Tải ảnh lên</Button>
           </Upload>
         </div>
+
 
         <Form form={form} layout="vertical">
           <Form.Item

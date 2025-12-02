@@ -39,7 +39,7 @@ function routes(app) {
     app.post('/api/upload-images', upload.array('images'), (req, res) => {
         return res.status(200).json({
             message: 'Images uploaded successfully',
-            images: req.files.map((file) => `http://localhost:3000/uploads/images/${file.filename}`),
+            images: req.files.map((file) => `${import.meta.env.VITE_SOCKET_URL}/uploads/images/${file.filename}`),
         });
     });
 
@@ -47,7 +47,7 @@ function routes(app) {
         const file = req.file;
         return res.status(200).json({
             message: 'Image uploaded successfully',
-            image: `http://localhost:3000/uploads/images/${file.filename}`,
+            image: `${import.meta.env.VITE_SOCKET_URL}/uploads/images/${file.filename}`,
         });
     });
 

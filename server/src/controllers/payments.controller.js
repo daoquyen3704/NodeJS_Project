@@ -26,8 +26,8 @@ class PaymentsController {
             var requestId = partnerCode + new Date().getTime();
             var orderId = requestId;
             var orderInfo = `nap tien ${id}`; // nội dung giao dịch thanh toán
-            var redirectUrl = 'http://localhost:3000/api/check-payment-momo'; // 8080
-            var ipnUrl = 'http://localhost:3000/api/check-payment-momo';
+            var redirectUrl = `${import.meta.env.VITE_SOCKET_URL}/api/check-payment-momo`; // 8080
+            var ipnUrl = `${import.meta.env.VITE_SOCKET_URL}/api/check-payment-momo`;
             var amount = amountUser;
             var requestType = 'captureWallet';
             var extraData = ''; //pass empty value if your merchant does not have stores
@@ -100,7 +100,7 @@ class PaymentsController {
                 vnp_TxnRef: `${id}-${uuid}`,
                 vnp_OrderInfo: `nap tien ${id}`,
                 vnp_OrderType: ProductCode.Other,
-                vnp_ReturnUrl: `http://localhost:3000/api/check-payment-vnpay`, //
+                vnp_ReturnUrl: `${import.meta.env.VITE_SOCKET_URL}/api/check-payment-vnpay`, //
                 vnp_Locale: VnpLocale.VN, // 'vn' hoặc 'en'
                 vnp_CreateDate: dateFormat(new Date()), // tùy chọn, mặc định là hiện tại
                 vnp_ExpireDate: dateFormat(tomorrow), // tùy chọn
