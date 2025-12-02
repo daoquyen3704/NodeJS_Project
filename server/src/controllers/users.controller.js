@@ -23,29 +23,32 @@ const { jwtDecode } = require('jwt-decode');
 
 // ================= COOKIE CONFIG CHUẨN LOCALHOST ================= //
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const cookieConfig = {
-    token: {
-        httpOnly: true,
-        secure: false,     // localhost bắt buộc false
-        sameSite: "lax",
-        path: "/",
-        maxAge: 15 * 60 * 1000, // 15 phút
-    },
-    logged: {
-        httpOnly: false,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
-    },
-    refreshToken: {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-    }
+  token: {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? 'None' : 'Lax',
+    path: '/',
+    maxAge: 45 * 60 * 1000,
+  },
+  logged: {
+    httpOnly: false,
+    secure: isProd,
+    sameSite: isProd ? 'None' : 'Lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  },
+  refreshToken: {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? 'None' : 'Lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  },
 };
+
 
 // ================================================================= //
 
