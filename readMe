@@ -1,0 +1,27 @@
+https://nodejs.org/en
+
+https://console.cloud.google.com/
+
+https://goong.io/
+
+-- Tùng: update sửa 2025_11_16
+
+A. Frontend:
+1. admin + user (admin + infouser)
+2. đăng ký + đăng nhập (login + register)
+3. thông tin bài viết (detailpost)
+4. nhắn tin giữa users (utils/messager)
+5. cardbody (bấm vào cả cardbody để trỏ đến detailpost, không cần chỉ bấm vào ảnh nữa)
+6. thêm CRUD cho admin (managerposts + managerusers)
+
+
+B. Backend:
+1. lấy dữ liệu (dashboard, managerusers, managerposts) lên fe cho admin (còn thiếu giao dịch do chưa có be) 
+2. đã sửa admin/dashboard + managerposts
+3. đã sửa user/updateinfo + managerposts + createpost
+
+Đang thiếu:
+1. be phần giao dịch (transaction) 1/2 
+2. be phần admin/managerusers (sửa, xoá user) 
+3. homepage tin đăng gần bạn (side content bên phải)
+4. detailpost tin đăng nổi bật (side content bên phải)

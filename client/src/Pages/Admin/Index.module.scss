@@ -1,0 +1,139 @@
+@use './_tokens' as t;
+
+.admin-layout {
+  min-height: 100vh;
+  background: t.$bg-page;
+}
+
+/* SIDEBAR GIỐNG INFOUSER */
+.sider {
+  @include t.sider-gradient;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      1200px 400px at -10% 0%,
+      rgba(255,255,255,0.08) 0%,
+      rgba(255,255,255,0) 60%
+    );
+    pointer-events: none;
+  }
+}
+
+/* LOGO GIỐNG USER, NHƯNG TEXT ADMIN */
+.logo {
+  height: 80px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 0;
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+  }
+
+  .logo-text {
+    h1 {
+      color: #fff;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    span {
+      display: block;
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+  }
+}
+
+/* MENU GIỐNG INFOUSER */
+.menu {
+  background: transparent !important;
+  border-right: none;
+  position: relative;
+  z-index: 1;
+
+  :global {
+    .ant-menu {
+      background: transparent !important;
+      border-right: none;
+    }
+
+    .ant-menu-item {
+      margin: 4px 16px !important;
+      border-radius: 8px;
+      height: 50px;
+      line-height: 50px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      color: #fff;
+
+      &:hover {
+        background: rgba(255,255,255,0.1) !important;
+      }
+
+      &.ant-menu-item-selected {
+        background: rgba(255,255,255,0.2) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+        &::after {
+          display: none;
+        }
+      }
+
+      .anticon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+/* PHẦN MAIN + HEADER + CONTENT GIỐNG INFOUSER */
+.main {
+  background: t.$bg-page;
+}
+
+.header {
+  padding: 24px 24px 0;
+
+  .title {
+    @include t.heading-24;
+  }
+}
+
+.content {
+  padding: 24px;
+}
+
+.card {
+  @include t.card-surface;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 2px solid #1d2964; // giống InfoUser.card
+}

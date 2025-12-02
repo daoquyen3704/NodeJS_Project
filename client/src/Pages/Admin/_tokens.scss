@@ -1,0 +1,33 @@
+/* === Admin Design Tokens (shared with InfoUser) === */
+$primary-800: #131E33; // sider gradient start
+$primary-700: #1a237e; // heading
+$primary-600: #0d47a1; // sider gradient end
+$bg-page: #ffffff;
+$bg-card: #ffffff;
+
+$text-strong: #1f2937;
+$text-body: #374151;
+$text-subtle: #6b7280;
+
+$border: rgba(0,0,0,0.08);
+$shadow-md: 0 8px 24px rgba(16,24,40,0.08);
+
+$radius-lg: 12px;
+
+@mixin card-surface {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+}
+
+@mixin heading-24 {
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: $primary-700;
+}
+
+@mixin sider-gradient {
+  background: linear-gradient(180deg, $primary-800 100%, $primary-600 100%);
+}

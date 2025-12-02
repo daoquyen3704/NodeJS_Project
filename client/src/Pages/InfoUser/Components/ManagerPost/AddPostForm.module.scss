@@ -1,0 +1,120 @@
+@use '../../../Admin/_tokens' as t;
+
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  @include t.heading-24;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: t.$text-subtle;
+}
+
+/* Card bọc toàn bộ form – giống ChangePassword / PersonalInfo */
+.form-card {
+  @include t.card-surface;
+  padding: 24px 24px 16px;
+  border-color: #c2b9c8; // đồng bộ manager-post/dashboard
+}
+
+/* Form chung */
+.form {
+  :global {
+    .ant-form-item-label > label {
+      font-weight: 500;
+      color: t.$text-strong;
+    }
+  }
+}
+
+/* Tiêu đề từng section */
+.section-title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: t.$text-strong !important;
+  margin-bottom: 12px !important;
+}
+
+/* Editor TinyMCE */
+.editor-wrapper {
+  margin-bottom: 16px;
+
+  :global {
+    .tox-tinymce {
+      border-radius: 8px;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+  }
+}
+
+.map-section {
+  margin-top: 8px;
+
+  .map-title {
+    margin-bottom: 12px;
+  }
+
+  iframe {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
+
+.summary-col {
+  padding-bottom: 24px;
+
+  :global {
+    .ant-statistic-title {
+      font-size: 13px;
+      color: t.$text-subtle;
+    }
+
+    .ant-statistic-content {
+      font-size: 18px;
+      font-weight: 600;
+      color: t.$text-strong;
+    }
+  }
+}
+
+.price-table {
+  margin-bottom: 24px;
+}
+
+/* Footer actions */
+.actions {
+  margin-top: 24px;
+  text-align: right;
+
+  // dùng flex để nút sát nhau đẹp hơn
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Nút phụ */
+.btn-secondary {
+  border-radius: 999px;
+  padding: 0 20px;
+}
+
+/* Nút chính – gradient giống toàn hệ thống */
+.btn-primary {
+  border-radius: 999px;
+  padding: 0 24px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+  }
+}

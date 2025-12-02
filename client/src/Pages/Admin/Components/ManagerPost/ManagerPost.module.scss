@@ -1,0 +1,132 @@
+.manager-post {
+  padding: 0; // vì đã có padding ở .page-card của Admin
+  background-color: transparent;
+
+  .stats-row {
+    margin-bottom: 24px;
+  }
+
+  /* Stat cards giống dashboard */
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    background-color: #ffffff;
+    border: 1px solid #c2b9c8;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      opacity: 0.9;
+
+      &.total {
+        background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+      }
+
+      &.approved {
+        background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+      }
+
+      &.pending {
+        background: linear-gradient(135deg, #f57f17 0%, #ffb300 100%);
+      }
+    }
+
+    :global {
+      .ant-statistic-title {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+
+      .ant-statistic-content {
+        font-size: 26px;
+        font-weight: 700;
+        color: #333;
+      }
+    }
+  }
+
+  /* Card chứa bảng – giống table-card của dashboard */
+  .table-card {
+    margin-top: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    background-color: #ffffff;
+    border: 1px solid #c2b9c8;
+
+    :global {
+      .ant-card-head {
+        border-bottom: 1px solid #f0f0f0;
+        padding: 16px 24px;
+
+        .ant-card-head-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a237e;
+        }
+      }
+
+      .ant-card-body {
+        padding: 24px;
+      }
+    }
+  }
+
+  /* Table chuẩn giống dashboard */
+  .posts-table {
+    :global {
+      .ant-table-thead > tr > th {
+        background: #f5f7fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .ant-table-tbody > tr:hover > td {
+        background: #f5f7fa;
+      }
+    }
+  }
+
+  /* Modal chi tiết – tinh chỉnh nhẹ cho dễ đọc */
+  .modal-body {
+    .images-section {
+      margin-bottom: 16px;
+    }
+
+    .details-desc {
+      margin-bottom: 16px;
+
+      :global {
+        .ant-descriptions-item-label {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .description {
+      margin-bottom: 16px;
+
+      p {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

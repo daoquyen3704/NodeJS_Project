@@ -1,0 +1,252 @@
+/* ========== TOKENS (fallback nếu chưa có trong :root) ========== */
+:global(:root) {
+  --primary-color: var(--gold, #e6b001);
+  --gold: #e6b001;
+  --gold-soft: rgba(190,149,13,.45);
+  --panel: rgba(255,255,255,.06);
+  --panel-text: #f3f4f6;
+  --muted: #a3aab8;
+}
+
+/* ========== LINK BỌC CARD (toàn bộ card click được) ========== */
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .list-item {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.45),
+      inset 0 0 0 1px var(--gold-soft);
+  }
+}
+
+/* ========== CARD (glass + viền vàng mảnh giống ornate-card) ========== */
+.list-item {
+  position: relative;
+  margin-top: 20px;
+  padding: 16px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+
+  background: linear-gradient(180deg, var(--panel) 0%, rgba(255,255,255,.04) 100%);
+  color: var(--panel-text);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+  backdrop-filter: saturate(120%) blur(6px);
+
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(212,175,55,.35), rgba(212,175,55,.05) 30%, rgba(212,175,55,.35));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  @supports not (mask-composite: exclude) {
+    &::before { display: none; }
+  }
+}
+
+/* ========== ẢNH FULL-WIDTH ========== */
+.parent {
+  --card-img-h: 250px;
+  display: block;
+  margin-bottom: 16px;
+  height: var(--card-img-h);
+  flex-shrink: 0;
+}
+
+.div1 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform .25s ease;
+  }
+
+  &:hover img { transform: scale(1.03); }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .parent { --card-img-h: 231px; }
+}
+@media (max-width: 900px) {
+  .parent { --card-img-h: 220px; }
+}
+
+/* ========== ROOM INFO ========== */
+.room-info {
+  padding: 12px 0 16px;
+
+  .room-title {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin: 0 0 8px;
+    color: #fff;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    .icon {
+      color: var(--gold);
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* phần text của tiêu đề — clamp 2 dòng */
+    .room-title-text {
+      flex: 1;
+      min-width: 0;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      max-height: calc(1.4em * 2);
+    }
+
+    &:hover { color: var(--gold); }
+  }
+
+  .room-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--muted);
+
+      .icon { color: var(--gold); font-size: 16px; }
+    }
+
+    .price {
+      color: #b7f5c8;
+      font-weight: 800;
+    }
+
+    .area {
+      color: #e5e7eb;
+    }
+
+    .location {
+      color: var(--muted);
+      max-width: 100%;
+
+      .location-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // max-width: 330px; */
+      }
+    }
+  }
+}
+
+/* ========== USER INFO ========== */
+.user-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding: 30px 0 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 100%;
+    height: 1px;
+    background: rgba(255,255,255,.12);
+    pointer-events: none;
+  }
+
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+
+  .info-container {
+    flex: 1;
+
+    .user-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+
+      h4 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+      }
+
+      span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--gold);
+      }
+    }
+  }
+}
+
+/* ========== ACCESSIBILITY & REDUCED MOTION ========== */
+:where(.card-link, .user-info button) {
+  &:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .div1 img { transition: none; }
+}

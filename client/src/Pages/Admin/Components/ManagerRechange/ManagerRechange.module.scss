@@ -1,0 +1,128 @@
+.manager-recharge {
+  padding: 0; // vì đã có padding trong .page-card của Admin
+  background-color: transparent;
+
+  .stats-row {
+    margin-bottom: 24px;
+  }
+
+  /* Stat cards – copy style từ dashboard.stat-card */
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    background-color: #ffffff;
+        border: 1px solid #c2b9c8;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #ffffff;
+      opacity: 0.9;
+
+      &.transactions-total {
+        background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+      }
+
+      &.transactions-recent {
+        background: linear-gradient(135deg, #1565c0 0%, #2196f3 100%);
+      }
+
+      &.revenue-total {
+        background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+      }
+
+      &.revenue-recent {
+        background: linear-gradient(135deg, #00897b 0%, #26a69a 100%);
+      }
+    }
+
+    :global {
+      .ant-statistic-title {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+
+      .ant-statistic-content {
+        font-size: 26px;
+        font-weight: 700;
+        color: #333;
+      }
+    }
+
+    .growth {
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+
+      &.positive {
+        color: #4caf50;
+      }
+
+      &.negative {
+        color: #f44336;
+      }
+    }
+  }
+
+  /* Card chứa bảng – giống dashboard.table-card */
+  .table-card {
+    margin-top: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    background-color: #ffffff;
+        border: 1px solid #c2b9c8;
+
+    :global {
+      .ant-card-head {
+        border-bottom: 1px solid #f0f0f0;
+        padding: 16px 24px;
+
+        .ant-card-head-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a237e;
+        }
+      }
+
+      .ant-card-body {
+        padding: 24px;
+      }
+    }
+  }
+
+  /* Table – header & hover giống dashboard.transactions-table */
+  .recharge-table {
+    :global {
+      .ant-table-thead > tr > th {
+        background: #f5f7fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .ant-table-tbody > tr:hover > td {
+        background: #f5f7fa;
+      }
+    }
+  }
+}

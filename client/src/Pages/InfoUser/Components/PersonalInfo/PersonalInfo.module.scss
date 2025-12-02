@@ -1,0 +1,192 @@
+@use '../../../Admin/_tokens' as t;
+
+.wrapper {
+  padding: 0; // đã có .card bọc ở InfoUser
+}
+
+/* Header trên cùng: title + nút chỉnh sửa */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.title {
+  @include t.heading-24;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: t.$text-subtle;
+}
+
+/* Nút "Chỉnh sửa thông tin" – gradient giống các nút khác */
+.edit-btn {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+  }
+}
+
+/* Card nhỏ: Họ tên / SDT / Email / Địa chỉ */
+.info-card {
+  border-radius: 12px !important;
+  border: 1px solid #c2b9c8 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  :global {
+    .ant-card-body {
+      padding: 16px 18px;
+    }
+  }
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start; // để khi nhiều dòng thì text không bị lệch dọc
+  gap: 12px;
+
+  /* Khối chứa text (tiêu đề + value) */
+  > div {
+    flex: 1;
+    min-width: 0; // rất quan trọng để text chịu xuống dòng trong flex
+  }
+}
+
+.info-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 35, 126, 0.08);
+  color: #1a237e;
+  font-size: 18px;
+}
+
+
+.info-value {
+  margin-top: 4px;
+  color: t.$text-body;
+  word-break: break-word;     // cho phép bẻ ở giữa từ nếu quá dài
+  overflow-wrap: anywhere;    // browser hiện đại: bẻ ở bất cứ đâu nếu cần
+}
+/* Tin yêu thích */
+.favorites-section {
+  margin-top: 24px;
+}
+
+.favorites-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #c2b9c8;
+
+  :global {
+    .ant-card-body {
+      padding: 20px 24px;
+    }
+  }
+}
+
+.favorites-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.favorites-icon {
+  font-size: 20px;
+  color: #ff4d4f;
+}
+
+.favorites-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a237e;
+}
+
+/* Table style giống dashboard */
+.favorites-table {
+  :global {
+    .ant-table-thead > tr > th {
+      background: #f5f7fa;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background: #f5f7fa;
+    }
+  }
+}
+
+/* Modal chỉnh sửa info + avatar */
+.edit-modal {
+  :global {
+    .ant-modal-content {
+      border-radius: 16px;
+    }
+
+    .ant-modal-header {
+      border-radius: 16px 16px 0 0;
+    }
+
+    .ant-modal-title {
+      font-weight: 600;
+      color: t.$primary-700;
+    }
+
+    .ant-btn-primary {
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+      border: none;
+
+      &:hover,
+      &:focus {
+        background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+      }
+    }
+  }
+}
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.avatar-wrapper {
+  margin-bottom: 16px;
+}
+
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(26, 35, 126, 0.2);
+}

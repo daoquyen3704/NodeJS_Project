@@ -1,0 +1,183 @@
+@use '../Admin/_tokens' as t;
+
+.wrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(26, 35, 126, 0.18), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(13, 71, 161, 0.18), transparent 55%),
+              #0b1221;
+}
+
+.main {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.login-card {
+  @include t.card-surface;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px 24px 16px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.35);
+}
+
+.card-header {
+  margin-bottom: 16px;
+}
+
+.title {
+  @include t.heading-24;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: t.$text-subtle;
+}
+
+/* Tabs */
+.login-tabs {
+  :global {
+    .ant-tabs-nav {
+      margin-bottom: 16px;
+    }
+
+    .ant-tabs-tab {
+      font-weight: 500;
+      padding: 8px 16px;
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: t.$primary-700;
+    }
+
+    .ant-tabs-ink-bar {
+      background: t.$primary-700;
+    }
+  }
+}
+
+/* Form */
+.login-form {
+  :global {
+    .ant-form-item-label > label {
+      font-weight: 500;
+      color: t.$text-strong;
+    }
+
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-password {
+      border-radius: 10px;
+    }
+
+    .ant-input-affix-wrapper-focused,
+    .ant-input-focused {
+      box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.16);
+      border-color: t.$primary-700;
+    }
+  }
+}
+
+/* Links dưới input */
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.link-text {
+  font-size: 13px;
+  color: t.$primary-700;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Divider "Hoặc" */
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: rgba(148, 163, 184, 0.5);
+}
+
+.or-text {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+/* Google */
+.google-wrapper {
+  text-align: center;
+
+  :global {
+    // thu nhỏ một chút cho gọn card
+    div[role='button'] {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* Nút đăng nhập */
+.login-button {
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+  }
+}
+
+/* Terms */
+.terms {
+  margin-top: 4px;
+  font-size: 12px;
+  color: t.$text-subtle;
+  text-align: center;
+}
+
+.terms-link {
+  color: t.$primary-700;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 20px 16px 12px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a237e;
+  }
+}
+
+.tab-title {
+  font-size: 18px;      // chỉnh to nhỏ ở đây
+  font-weight: 600;
+  letter-spacing: 0.08em; // cho chữ cách nhẹ, nhìn “auth” hơn
+  text-transform: uppercase;
+}

@@ -1,0 +1,126 @@
+@use '../../../Admin/_tokens' as t;
+
+.wrapper {
+  padding: 0; // vì đã nằm trong .card của InfoUser
+}
+
+/* Card trắng bọc cả phần quản lý bài viết */
+.panel {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #c2b9c8;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 20px 24px;
+}
+
+/* Header: title + subtitle + nút thêm */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.header-text {
+  .title {
+    @include t.heading-24;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: t.$text-subtle;
+  }
+}
+
+/* Nút "Thêm bài viết" – gradient giống RechargeUser / ChangePassword */
+.add-btn {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+  }
+}
+
+/* Bảng giá gia hạn */
+.price-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  :global {
+    .ant-card-head {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px 12px 0 0;
+
+      .ant-card-head-title {
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.price-item {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  }
+}
+
+.price-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.price-detail {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.price-days {
+  font-size: 14px;
+}
+
+/* Bảng – style giống dashboard transactions table */
+.table {
+  :global {
+    .ant-table-thead > tr > th {
+      background: #f5f7fa;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background: #f5f7fa;
+    }
+  }
+}

@@ -1,0 +1,166 @@
+@use '../../../Admin/_tokens' as t;
+
+.wrapper {
+  padding: 0; // đã có padding từ .card ở InfoUser
+}
+
+/* Panel trắng có viền + shadow giống dashboard card */
+.panel {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #c2b9c8;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 20px 24px;
+  height: 100%;
+}
+
+.panel-header,
+.history-header {
+  margin-bottom: 16px;
+}
+
+.title {
+  @include t.heading-24;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: t.$text-subtle;
+}
+
+/* Form styles */
+.form {
+  :global {
+    .ant-form-item-label > label {
+      font-weight: 500;
+      color: t.$text-strong;
+    }
+
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+
+    .ant-input-number,
+    .ant-input-number-input {
+      border-radius: 10px;
+    }
+
+    .ant-input-number-group-addon {
+      border-radius: 0 10px 10px 0;
+    }
+  }
+}
+
+.amount-input {
+  :global {
+    .ant-input-number-input {
+      padding: 8px 12px;
+    }
+  }
+}
+
+/* Radio phương thức thanh toán */
+.payment-methods {
+  :global {
+    .ant-radio-button-wrapper {
+      border-radius: 999px;
+      border-color: #e5e7eb;
+      padding: 0 20px;
+      height: 38px;
+      line-height: 36px;
+      font-weight: 500;
+      color: t.$text-body;
+
+      &:first-child {
+        border-radius: 999px 0 0 999px;
+      }
+
+      &:last-child {
+        border-radius: 0 999px 999px 0;
+      }
+
+      &.ant-radio-button-wrapper-checked {
+        background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+        color: #ffffff;
+        border-color: transparent;
+      }
+    }
+  }
+}
+
+.actions {
+  margin-top: 8px;
+}
+
+/* Nút nạp tiền – gradient giống ChangePassword */
+.recharge-button {
+  height: 44px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  border: none;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+  }
+}
+
+/* Lịch sử nạp tiền: table giống dashboard */
+.history-panel {
+  .history-table {
+    margin-top: 8px;
+
+    :global {
+      .ant-table-thead > tr > th {
+        background: #f5f7fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .ant-table-tbody > tr:hover > td {
+        background: #f5f7fa;
+      }
+    }
+  }
+}
+
+/* Modal success – tweak nhẹ cho đồng bộ */
+.success-modal {
+  :global {
+    .ant-modal-content {
+      border-radius: 16px;
+    }
+
+    .ant-result-title {
+      font-weight: 700;
+      color: t.$primary-700;
+    }
+
+    .ant-result-subtitle {
+      color: t.$text-body;
+    }
+
+    .ant-btn-primary {
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+      border: none;
+
+      &:hover,
+      &:focus {
+        background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+      }
+    }
+  }
+}
+
+.payment-details {
+  font-size: 14px;
+  color: t.$text-body;
+
+  p {
+    margin-bottom: 4px;
+  }
+}
