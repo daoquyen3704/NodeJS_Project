@@ -47,7 +47,7 @@ function routes(app) {
         const file = req.file;
         return res.status(200).json({
             message: 'Image uploaded successfully',
-            image: `${import.meta.env.VITE_SOCKET_URL}/uploads/images/${file.filename}`,
+            image: `${process.env.SERVER_URL}/uploads/images/${file.filename}`,
         });
     });
 
