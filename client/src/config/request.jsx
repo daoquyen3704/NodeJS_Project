@@ -5,7 +5,7 @@ import cookies from "js-cookie";
 axios.defaults.withCredentials = true;
 
 const request = axios.create({
-  baseURL: process.env.VITE_SOCKET_URL,
+  baseURL: import.meta.env.VITE_SOCKET_URL,
   withCredentials: true,
 });
 
