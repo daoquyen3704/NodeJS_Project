@@ -13,21 +13,25 @@ const { Text, Title } = Typography;
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { requestLogin, requestLoginGoogle } from "../../config/request";
+import { useStore } from "../../hooks/useStore";
 
 function LoginUser() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { fetchAuth } = useStore();
 
   const onFinish = async (values) => {
     try {
       const res = await requestLogin(values);
       message.success(res.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+
+      // Fetch user data immediately after login to update context
+      await fetchAuth();
+
+      // Navigate to home page
       navigate("/");
     } catch (error) {
-      message.error(error.response.data.message);
+      message.error(error.response?.data?.message || "Đăng nhập thất bại");
     }
   };
 
@@ -36,12 +40,14 @@ function LoginUser() {
     try {
       const res = await requestLoginGoogle({ credential });
       message.success(res.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+
+      // Fetch user data immediately after Google login
+      await fetchAuth();
+
+      // Navigate to home page
       navigate("/");
     } catch (error) {
-      message.error(error.response.data.message);
+      message.error(error.response?.data?.message || "Đăng nhập thất bại");
     }
   };
 

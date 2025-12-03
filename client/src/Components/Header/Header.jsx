@@ -18,7 +18,7 @@ import { useSocket } from "../../hooks/useSocket";
 const cx = classNames.bind(styles);
 
 function Header() {
-  const { dataUser, dataSearch, setValueSearch } = useStore();
+  const { dataUser, setDataUser, dataSearch, setValueSearch } = useStore();
   const { dataMessagersUser } = useSocket();
 
   const navigate = useNavigate();
@@ -28,10 +28,17 @@ function Header() {
   const handleLogout = async () => {
     try {
       await requestLogout();
+
+      // Clear user data immediately in context
+      setDataUser({});
+
+      // Navigate to home
+      navigate("/");
+
+      // Small delay then reload to ensure clean state
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
-      navigate("/");
+      }, 100);
     } catch (error) {
       console.log(error);
     }

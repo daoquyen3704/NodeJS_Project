@@ -83,6 +83,7 @@ export function Provider({ children }) {
     <Context.Provider
       value={{
         dataUser,
+        setDataUser,           // 🆕 Export để LoginUser có thể clear/update state
         dataPayment,
         setDataPayment,
         fetchAuth,             // để Login / Profile có thể gọi lại sau khi update
