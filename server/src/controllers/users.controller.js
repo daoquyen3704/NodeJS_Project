@@ -26,27 +26,27 @@ const { jwtDecode } = require('jwt-decode');
 const isProd = process.env.NODE_ENV === 'production';
 
 const cookieConfig = {
-  token: {
-    httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'None' : 'Lax',
-    path: '/',
-    maxAge: 45 * 60 * 1000,
-  },
-  logged: {
-    httpOnly: false,
-    secure: isProd,
-    sameSite: isProd ? 'None' : 'Lax',
-    path: '/',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  },
-  refreshToken: {
-    httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'None' : 'Lax',
-    path: '/',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  },
+    token: {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? 'None' : 'Lax',
+        path: '/',
+        maxAge: 45 * 60 * 1000,
+    },
+    logged: {
+        httpOnly: false,
+        secure: isProd,
+        sameSite: isProd ? 'None' : 'Lax',
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+    refreshToken: {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? 'None' : 'Lax',
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
 };
 
 
@@ -79,6 +79,10 @@ class controllerUsers {
         const token = await createToken({ id: user._id });
         const refreshToken = await createRefreshToken({ id: user._id });
 
+        // Logging for debugging
+        console.log('🍪 Setting cookies for new user:', user.email);
+        console.log('🔧 Environment:', isProd ? 'PRODUCTION' : 'DEVELOPMENT');
+
         // Cookie
         res.cookie("token", token, cookieConfig.token);
         res.cookie("logged", 1, cookieConfig.logged);
@@ -106,6 +110,15 @@ class controllerUsers {
 
         const token = await createToken({ id: user._id });
         const refreshToken = await createRefreshToken({ id: user._id });
+
+        // Logging for debugging
+        console.log('🍪 Setting cookies for user:', user.email);
+        console.log('🔧 Environment:', isProd ? 'PRODUCTION' : 'DEVELOPMENT');
+        console.log('🔒 Cookie config:', {
+            secure: cookieConfig.token.secure,
+            sameSite: cookieConfig.token.sameSite,
+            httpOnly: cookieConfig.token.httpOnly
+        });
 
         res.cookie("token", token, cookieConfig.token);
         res.cookie("logged", 1, cookieConfig.logged);
@@ -137,6 +150,10 @@ class controllerUsers {
         const token = await createToken({ id: user._id });
         const refreshToken = await createRefreshToken({ id: user._id });
 
+        // Logging for debugging
+        console.log('🍪 Setting cookies for Google user:', user.email);
+        console.log('🔧 Environment:', isProd ? 'PRODUCTION' : 'DEVELOPMENT');
+
         res.cookie("token", token, cookieConfig.token);
         res.cookie("logged", 1, cookieConfig.logged);
         res.cookie("refreshToken", refreshToken, cookieConfig.refreshToken);
@@ -167,9 +184,17 @@ class controllerUsers {
     async logout(req, res) {
         await modelApiKey.deleteOne({ userId: req.user.id });
 
-        res.clearCookie("token", { path: "/" });
-        res.clearCookie("refreshToken", { path: "/" });
-        res.clearCookie("logged", { path: "/" });
+        // Clear cookies with same config as when they were set
+        const clearCookieOptions = {
+            path: "/",
+            secure: isProd,
+            sameSite: isProd ? 'None' : 'Lax',
+        };
+
+        console.log('🗑️ Clearing cookies for user:', req.user.id);
+        res.clearCookie("token", clearCookieOptions);
+        res.clearCookie("refreshToken", clearCookieOptions);
+        res.clearCookie("logged", clearCookieOptions);
 
         return new OK({ message: "Đăng xuất thành công" }).send(res);
     }
@@ -177,15 +202,22 @@ class controllerUsers {
     // ================= REFRESH TOKEN ================= //
     async refreshToken(req, res) {
         const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) throw new BadRequestError("Không có refresh token");
+        if (!refreshToken) {
+            console.log('❌ No refresh token in cookies');
+            throw new BadRequestError("Không có refresh token");
+        }
 
         const decoded = await verifyToken(refreshToken);
-        if (!decoded) throw new BadRequestError("Refresh token không hợp lệ");
+        if (!decoded) {
+            console.log('❌ Invalid refresh token');
+            throw new BadRequestError("Refresh token không hợp lệ");
+        }
 
         const user = await modelUser.findById(decoded.id);
 
         const newToken = await createToken({ id: user._id });
 
+        console.log('🔄 Refreshing token for user:', user.email);
         res.cookie("token", newToken, cookieConfig.token);
         res.cookie("logged", 1, cookieConfig.logged);
 

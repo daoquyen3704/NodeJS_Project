@@ -39,6 +39,17 @@ app.use(cookiesParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Debug middleware for CORS and cookies
+app.use((req, res, next) => {
+    if (req.url.includes('/api/login') || req.url.includes('/api/auth') || req.url.includes('/api/refresh-token')) {
+        console.log(`\n📨 ${req.method} ${req.url}`);
+        console.log('Origin:', req.headers.origin);
+        console.log('Cookies:', req.cookies);
+        console.log('Has credentials:', req.headers['cookie'] ? 'Yes' : 'No');
+    }
+    next();
+});
+
 // ⭐ MUST BE HERE → Log mọi request
 app.use(requestLogger);
 
