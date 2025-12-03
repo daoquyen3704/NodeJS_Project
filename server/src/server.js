@@ -33,7 +33,25 @@ const { askQuestion } = require('./utils/Chatbot/chatbot');
 const { AiSearch } = require('./utils/AISearch/AISearch');
 
 // ===== MIDDLEWARE =====
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+// Enhanced CORS configuration for cross-origin cookies
+const corsOptions = {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    optionsSuccessStatus: 200,
+    exposedHeaders: ['Set-Cookie'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+};
+
+app.use(cors(corsOptions));
+
+// Additional middleware to ensure CORS headers are set for cookies
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+    next();
+});
+
 app.use(express.static(path.join(__dirname, '../src')));
 app.use(cookiesParser());
 app.use(bodyParser.json());
